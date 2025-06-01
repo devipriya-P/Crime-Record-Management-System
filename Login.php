@@ -34,3 +34,5 @@ if ($result->num_rows === 1) {
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid username or password']);
 }
+$conn->close();
+?>
