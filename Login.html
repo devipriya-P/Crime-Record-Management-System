@@ -1,0 +1,190 @@
+1.Login.html:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crime Record Management System</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .navigation {
+      background-color: #34495e;
+      padding: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .nav-button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .nav-button:hover {
+      background-color: #c0392b;
+    }
+
+    .container {
+      background-image: linear-gradient(to bottom, #fdd835, #ff9800);
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: 20px;
+      width: 80%;
+      max-width: 900px;
+    }
+
+    .welcome-message {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    .login-button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .login-button:hover {
+      background-color: #219653;
+    }
+
+    .footer {
+      background-color: #34495e;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      width: 100%;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1><img src="your-police-badge-icon.png" alt="Police Badge" style="height: 30px; vertical-align: middle; margin-right: 10px;"> Crime Record Management System</h1>
+  </div>
+
+  <div class="container">
+    <div class="login-container">
+      <h2>User Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit" class="login-button">Login</button>
+      </form>
+      <div id="error-message" class="error-message"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 Crime Record System | Designed for Safety & Security
+  </div>
+
+  <!-- JavaScript to handle login -->
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessageDiv = document.getElementById('error-message');
+      errorMessageDiv.textContent = '';
+
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
+
+      fetch('login.php', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = 'dashboard.php';
+        } else {
+          errorMessageDiv.textContent = data.message || 'Invalid username or password.';
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        errorMessageDiv.textContent = 'An error occurred during login.';
+      });
+    });
+  </script>
+</body>
+</html>
+
